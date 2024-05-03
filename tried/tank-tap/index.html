@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water-Tap</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+      <div id="waterLevel" class="leftbox">  <div id="water"></div>   </div>
+      <div class="rightbox">
+
+        <div class="right_top">
+            <div id="tapButton" onclick="main()" class="tap_button"></div>
+        </div>
+
+        <div class="right_bottom">
+            <div class="pipe"></div>
+            <div class="tap"></div>
+
+
+
+
+            <div id="waterFlow" class="waterflow"></div>
+        </div>
+    
+      </div>
+    </div>
+
+  <script>
+    var intervalId;
+    var isFlowing=false;
+
+    function main() {
+      if (isFlowing) {
+        console.log("yes stop flowing")
+        stopFlow();
+
+      } else if(!isFlowing) {
+        console.log("no start flowing")
+        startFlow();
+      }
+    }
+
+    var flow = document.getElementById("waterFlow")
+    function startFlow(){
+      
+      flow.style.visibility = "visible";
+      isFlowing=true;
+      intervalId=setInterval(water ,10);
+    }
+
+    function stopFlow(){
+      isFlowing=false;
+      flow.style.visibility = "hidden";
+      clearInterval(intervalId);
+    }
+  
+    function water(){
+
+        var water=document.getElementById("water")
+        var currentHeight = water.clientHeight;
+
+        var newHeight = Math.max(currentHeight - 1,0); // Decrease by 1 pixel
+        water.style.height = newHeight + 'px';
+        water.style.marginTop = (400  - newHeight)  + "px";
+        
+
+        if (newHeight === 0) {
+          flow.style.visibility = "hidden";
+          stopFlow();
+        }
+
+    }
+
+  </script>
+</body>
+</html>
